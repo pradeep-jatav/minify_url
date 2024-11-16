@@ -1,6 +1,3 @@
-Here’s a professional and engaging **README.md** file template for your project, *MinifyLink*:
-
----
 
 # **MinifyLink**  
 A sleek and efficient tool to generate short links for any URL. MinifyLink combines simplicity, functionality, and scalability, offering advanced features like custom short links, analytics, and more.
@@ -96,7 +93,3 @@ Contributions are welcome!
 
 ## **License**  
 This project is licensed under the MIT License.  
-
----
-
-Let me know if you'd like to adjust anything specific!
