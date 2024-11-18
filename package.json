@@ -1,0 +1,20 @@
+{
+  "name": "shortlink",
+  "version": "1.0.0",
+  "description": "A sleek and efficient tool to generate short links for any URL. MinifyLink combines simplicity, functionality, and scalability, offering advanced features like custom short links, analytics, and more.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.7",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "mongodb": "^6.10.0",
+    "mongoose": "^8.8.1"
+  }
+}
