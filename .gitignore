@@ -1,6 +1,5 @@
 # Node modules
 node_modules/
-minify-link-next/
 
 # Environment files
 .env

@@ -18,7 +18,7 @@ export default function Home() {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:5000/shorten", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/shorten`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
