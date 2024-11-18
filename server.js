@@ -3,7 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const crypto = require('crypto');
-const URL = require('./models/urlModel'); // Import the URL model
+const URL = require('./models/UrlModel'); // Import the URL model
 
 const app = express();
 
