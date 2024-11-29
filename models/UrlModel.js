@@ -1,31 +1,35 @@
 const mongoose = require('mongoose');
-
-const urlSchema = new mongoose.Schema({
+const UrlSchema = new mongoose.Schema({
+  longUrl: {
+    type: String,
+    required: true,
+  },
   shortCode: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
-  customAlias: {  // New field for custom alias
+  customAlias: {
     type: String,
     unique: true,
-    sparse: true  // Allows empty values, so it can be optional
+    sparse: true, // Allow null or undefined customAlias
   },
-  longUrl: {
-    type: String,
-    required: true
+  clickCount: {
+    type: Number,
+    default: 0,
   },
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
-  expiresAt: Date,  // Optional, for link expiration
-  clickCount: {
-    type: Number,
-    default: 0
-  }
+  lastAccessed: {
+    type: Date,
+    default: Date.now,
+  },
+  expirationDate: { 
+    type: Date,
+    default: null,
+  }, // Optional expiration date
 });
 
-const Url = mongoose.model('Url', urlSchema);
-
-module.exports = Url;
+module.exports = mongoose.model('Url', UrlSchema);

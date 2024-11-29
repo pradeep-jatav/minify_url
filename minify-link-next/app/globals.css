@@ -10,10 +10,12 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #242a97;
   }
 }
-
+.overflow-wrap-break-word {
+  overflow-wrap: break-word;
+}
 body {
   color: var(--foreground);
   background: var(--background);
