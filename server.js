@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const crypto = require('crypto');
 const URL = require('./models/UrlModel'); // Import the URL model
-const BASE_URL = process.env.BASE_URL || `http://localhost:5000`;
+const BASE_URL = `https://minify-url.onrender.com` || `http://localhost:5000`;
 const app = express();
 
 app.use(cors()); // This will allow requests from any origin
