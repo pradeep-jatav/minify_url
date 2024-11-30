@@ -18,7 +18,6 @@ A sleek and efficient tool to generate short links for any URL. MinifyLink combi
 - **Backend**: Node.js + Express  
 - **Database**: MongoDB  
 - **Extras**:  
-  - D3.js for analytics visualization  
   - QR code generation  
 
 ---
@@ -33,10 +32,7 @@ Follow these steps to set up *MinifyLink* locally:
 
 ### Installation  
 1. Clone the repository:  
-   ```bash
-   git clone https://github.com/<your-username>/MinifyLink.git
-   cd MinifyLink
-   ```
+   
 
 2. Set up the backend:  
    ```bash
