@@ -81,6 +81,38 @@ export default function LinkAnalytics() {
     }
   };
 
+  // Delete the selected link
+  const handleDelete = async (linkId) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this link?");
+    if (!confirmDelete) return;
+
+    setLoading(true);
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/links/${linkId}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to delete link");
+      }
+
+      // Remove the deleted link from the links and filteredLinks state
+      setLinks(links.filter((link) => link._id !== linkId));
+      setFilteredLinks(filteredLinks.filter((link) => link._id !== linkId));
+
+      alert("Link deleted successfully!");
+      handleClosePopup(); // Close the popup after deletion
+    } catch (error) {
+      console.error("Error deleting link:", error);
+      alert("Failed to delete the link.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="p-6 bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white min-h-screen">
       <h1 className="text-4xl font-extrabold mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500">
@@ -182,8 +214,14 @@ export default function LinkAnalytics() {
               <strong>Click Count:</strong> {selectedLink.clickCount}
             </p>
             <button
-              onClick={handleClosePopup}
+              onClick={() => handleDelete(selectedLink.shortCode)}
               className="mt-4 w-full p-4 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all duration-300"
+            >
+              Delete Link
+            </button>
+            <button
+              onClick={handleClosePopup}
+              className="mt-4 w-full p-4 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all duration-300"
             >
               Close
             </button>
