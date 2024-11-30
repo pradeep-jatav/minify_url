@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const crypto = require('crypto');
 const URL = require('./models/UrlModel'); // Import the URL model
-const BASE_URL = `https://minify-url.onrender.com` || `http://localhost:5000`;
+const BASE_URL = process.env.BASE_URL || `http://localhost:5000`;
 const app = express();
 
 app.use(cors()); // This will allow requests from any origin
@@ -220,7 +220,47 @@ app.get('/api/links/:id', async (req, res) => {
       res.status(500).json({ success: false, message: 'Error fetching link details', error: error.message });
   }
 });
+// DELETE route to delete a link by customAlias or shortCode
+app.delete('/api/links/:id', async (req, res) => {
+  try {
+    const linkId = req.params.id;
+    console.log("Received id for deletion:", linkId);
 
+    // Find the link by customAlias or shortCode
+    const link = await URL.findOneAndDelete({ $or: [{ customAlias: linkId }, { shortCode: linkId }] });
+
+    if (!link) {
+      return res.status(404).json({ success: false, message: 'Link not found' });
+    }
+
+    res.status(200).json({ success: true, message: 'Link deleted successfully', link });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Error deleting link', error: error.message });
+  }
+});
+
+app.delete('/api/links/:id', async (req, res) => {
+  try {
+    const linkId = req.params.id;  // This will be either `shortCode` or `customAlias`
+    console.log("Received delete request for ID:", linkId);  // Log the received link ID
+
+    // Attempt to find and delete the link by customAlias or shortCode
+    const link = await URL.findOneAndDelete({ 
+      $or: [{ customAlias: linkId }, { shortCode: linkId } , { _id: linkId }] 
+    });
+
+    if (!link) {
+      console.log(`Link not found for deletion with ID: ${linkId}`); // Log if not found
+      return res.status(404).json({ success: false, message: 'Link not found' });
+    }
+
+    console.log("Successfully deleted the link:", link);  // Log if deleted successfully
+    res.status(200).json({ success: true, message: 'Link deleted successfully', link });
+  } catch (error) {
+    console.error("Error deleting link:", error);  // Log any errors
+    res.status(500).json({ success: false, message: 'Error deleting link', error: error.message });
+  }
+});
 
 // Start server
 const port = process.env.PORT || 5000;
