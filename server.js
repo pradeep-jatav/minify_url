@@ -14,7 +14,7 @@ app.use(express.json()); // For parsing JSON
 app.use(bodyParser.json());
 
 // MongoDB connection (Local or Atlas)
-mongoose.connect('mongodb+srv://pradeep213:IyecIJVN51QY2jws@cluster0.ry8juhn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
+mongoose.connect('enter here the coonection link', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
