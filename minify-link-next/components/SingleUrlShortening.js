@@ -35,10 +35,13 @@ export default function SingleUrlShortening() {
       }
 
       const data = await response.json();
+      console.log("Shortened URL response:", data);
+      
       if (data && data.shortUrl) {
-        setShortUrl(data.shortUrl);
+        const fixedShortUrl = data.shortUrl.replace(/([^:]\/)\/+/g, "$1");
+        setShortUrl(fixedShortUrl);
       } else {
-        setError("Failed to shorten URL.");
+        setError("Failed to URL.");
       }
     } catch (err) {
       setError(err.message || "Failed to shorten the URL. Please try again.");
@@ -62,7 +65,6 @@ export default function SingleUrlShortening() {
       }
     }
   };
-
   // Function to share QR code and URL
   const shareQrCode = async () => {
     if (navigator.share && shortUrl) {
@@ -138,7 +140,7 @@ export default function SingleUrlShortening() {
           </button>
         </div>
       </form>
-  
+    
       {shortUrl && (
         <div className="mt-8 text-center bg-gray-800 p-6 rounded-xl shadow-md">
           <p className="text-lg font-medium text-gray-300">Shortened URL:</p>
@@ -153,7 +155,7 @@ export default function SingleUrlShortening() {
   
           <div className="mt-6">
             <div ref={qrRef} className="inline-block">
-              <QRCode value={shortUrl} size={150} bgColor="#1a202c" fgColor="#ffffff" />
+              <QRCode value={shortUrl.replace(/\/\/+/g, '/')} size={150} bgColor="#1a202c" fgColor="#ffffff" />
             </div>
   
             <div className="mt-6 space-x-4">
