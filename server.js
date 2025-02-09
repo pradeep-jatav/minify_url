@@ -14,7 +14,7 @@ app.use(express.json()); // For parsing JSON
 app.use(bodyParser.json());
 
 // MongoDB connection (Local or Atlas)
-mongoose.connect('enter here the coonection link', {
+mongoose.connect('mongodb+srv://pradeep213:IyecIJVN51QY2jws@cluster0.ry8juhn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -199,7 +199,7 @@ app.get('/api/links', async (req, res) => {
   } catch (error) {
     console.error('Error fetching all links:', error.message);
     res.status(500).json({ success: false, message: 'Error fetching links', error: error.message });
-  }
+  } 
 });
 
 app.get('/api/links/:id', async (req, res) => {
