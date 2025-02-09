@@ -7,7 +7,7 @@ A sleek and efficient tool to generate short links for any URL. MinifyLink combi
 ## **Features**  
 - 🌐 **URL Shortening**: Generate compact, user-friendly links.  
 - ✨ **Custom Aliases**: Create personalized short URLs.  
-- 📊 **Analytics**: Track link performance (click count, location, etc.).  
+- 📊 **Analytics**: Track link performance (click count, last accessed etc.).  
 - ⏰ **Link Expiration**: Set expiration dates for your links.  
 - 🔒 **Security**: Detect and block malicious URLs.  
 
