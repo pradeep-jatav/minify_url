@@ -55,7 +55,7 @@ app.post('/batch-shorten', async (req, res) => {
 
       // Generate short code or use custom alias
       const shortCode = customAlias || crypto.createHash('md5').update(originalUrl).digest('hex').slice(0, 6);
-      const shortUrl = `${BASE_URL}/${shortCode}`;
+      const shortUrl = `${baseUrl.replace(/\/$/, "")}/${shortCode.replace(/^\//, "")}`;
 
       // Calculate expiration date if validity is provided
       const expirationDate = validity ? new Date(Date.now() + parseInt(validity) * 24 * 60 * 60 * 1000) : null;
