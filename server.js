@@ -242,7 +242,7 @@ app.delete('/api/links/:id', async (req, res) => {
 const deleteExpiredLinks = async () => {
   try {
     const now = new Date(); // Current timestamp
-    const result = await URL.deleteMany({ expiryDate: { $lt: now } });
+    const result = await URL.deleteMany({ expirationDate: { $lt: now } });
     console.log(`Deleted ${result.deletedCount} expired links.`);
   } catch (err) {
     console.error("Error deleting expired links:", err);
