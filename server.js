@@ -1,8 +1,8 @@
 const express = require('express');
 const cors = require('cors');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const crypto = require('crypto');
+const mongoose = require('mongoose'); //
+const bodyParser = require('body-parser'); //
+const crypto = require('crypto'); // For generating the short code
 const URL = require('./models/UrlModel'); // Import the URL model
 const BASE_URL = process.env.BASE_URL || `http://localhost:5000`;
 const app = express();
@@ -55,8 +55,8 @@ app.post('/batch-shorten', async (req, res) => {
 
       // Generate short code or use custom alias
       const shortCode = customAlias || crypto.createHash('md5').update(originalUrl).digest('hex').slice(0, 6);
-      const shortUrl = new URL(shortCode, BASE_URL).href;
-      
+      const shortUrl = `${BASE_URL}/${shortCode}`;
+
       // Calculate expiration date if validity is provided
       const expirationDate = validity ? new Date(Date.now() + parseInt(validity) * 24 * 60 * 60 * 1000) : null;
 
@@ -239,28 +239,27 @@ app.delete('/api/links/:id', async (req, res) => {
   }
 });
 
-app.delete('/api/links/:id', async (req, res) => {
+const deleteExpiredLinks = async () => {
   try {
-    const linkId = req.params.id;  // This will be either `shortCode` or `customAlias`
-    console.log("Received delete request for ID:", linkId);  // Log the received link ID
-
-    // Attempt to find and delete the link by customAlias or shortCode
-    const link = await URL.findOneAndDelete({ 
-      $or: [{ customAlias: linkId }, { shortCode: linkId } , { _id: linkId }] 
-    });
-
-    if (!link) {
-      console.log(`Link not found for deletion with ID: ${linkId}`); // Log if not found
-      return res.status(404).json({ success: false, message: 'Link not found' });
-    }
-
-    console.log("Successfully deleted the link:", link);  // Log if deleted successfully
-    res.status(200).json({ success: true, message: 'Link deleted successfully', link });
-  } catch (error) {
-    console.error("Error deleting link:", error);  // Log any errors
-    res.status(500).json({ success: false, message: 'Error deleting link', error: error.message });
+    const now = new Date(); // Current timestamp
+    const result = await URL.deleteMany({ expiryDate: { $lt: now } });
+    console.log(`Deleted ${result.deletedCount} expired links.`);
+  } catch (err) {
+    console.error("Error deleting expired links:", err);
   }
-});
+};
+
+// Run every minute
+setInterval(deleteExpiredLinks, 60 * 1000); // Runs every 60 seconds
+
+const deleteAllLinks = async () => {
+  try {
+    const result = await URL.deleteMany({});
+    console.log(`Deleted ${result.deletedCount} links.`);
+  } catch (err) {
+    console.error('Error deleting all links:', err);
+  }
+};
 
 // Start server
 const port = process.env.PORT || 5000;
