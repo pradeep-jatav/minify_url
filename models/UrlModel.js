@@ -32,4 +32,4 @@ const UrlSchema = new mongoose.Schema({
   }, // Optional expiration date
 });
 
-module.exports = mongoose.model('Url', UrlSchema);
+module.exports = mongoose.model('URL', UrlSchema);
